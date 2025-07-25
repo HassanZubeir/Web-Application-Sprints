@@ -1,0 +1,47 @@
+/* Form styles */
+form {
+  background-color: white;
+  padding: 25px;
+  border: 1px solid #ccc;
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+  background-color: #fefefe;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input[type="submit"] {
+  margin-top: 20px;
+  background-color: #004466;
+  color: white;
+  padding: 10px 18px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #006699;
+}
