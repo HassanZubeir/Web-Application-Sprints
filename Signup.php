@@ -9,21 +9,20 @@
 </head>
 <body>
 
-  <!-- Website Header -->
   <header>
     
     <h1>EquiSafe Company</h1>
     <p>Your Safety, Our Priority</p>
   </header>
 
-  <!-- Navigation Bar -->
+
   <nav>
     <div class="topnav-right">
       <a href="Login.php">Log In</a>
     </div>
   </nav>
 
-  <!-- Sign Up Form Section -->
+
   <section id="signup" class="container">
     <h2>Sign Up</h2>
     <form action="signup_details.php" method="POST" >
@@ -46,7 +45,7 @@
     </form>
   </section>
 
-  <!-- Footer -->
+
   <footer>
     <p>&copy; 2025 EquiSafe. All rights reserved.</p>
   </footer>

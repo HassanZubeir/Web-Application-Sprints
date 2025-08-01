@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "database.php"; // Your PDO connection file
+require_once "database.php"; 
 
 $error = '';
 
@@ -9,22 +9,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = trim($_POST['password']);
 
     try {
-        // Match email with the 'user' table
-        $stmt = $pdo->prepare("SELECT * FROM user WHERE email_address = :email");
+        //  First, check in the Admin table
+        $stmt = $pdo->prepare("SELECT * FROM Admin WHERE email_address = :email");
         $stmt->execute([':email' => $email]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && password_verify($password, $user['Pass'])) {
-            // Login success: create session
-            $_SESSION['UserID'] = $user['UserID'] ?? null; // assuming there's a UserID field
-            $_SESSION['email_address'] = $user['email_address'];
-            $_SESSION['first_name'] = $user['first_name'];
-
-            header("Location: home.php");
-            exit();
+        if ($admin) {
+            if (password_verify($password, $admin['password'])) {
+                $_SESSION['admin_id'] = $admin['AdminID'];
+                $_SESSION['email_address'] = $admin['email_address'];
+                header("Location: admin.php");
+                exit();
+            } else {
+                $error = "❌ Invalid email or password (Admin).";
+            }
         } else {
-            $error = "❌ Invalid email or password.";
+            // ❗Not an admin, try checking in user table
+            $stmt = $pdo->prepare("SELECT * FROM User WHERE email_address = :email");
+            $stmt->execute([':email' => $email]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user && password_verify($password, $user['Pass'])) {
+                $_SESSION['UserID'] = $user['UserID'];
+                $_SESSION['email_address'] = $user['email_address'];
+                $_SESSION['first_name'] = $user['First_name'];
+                header("Location: home.php");
+                exit();
+            } else {
+                $error = "❌ Invalid email or password.";
+            }
         }
+
     } catch (PDOException $e) {
         $error = "❌ Database error: " . $e->getMessage();
     }
